@@ -1,0 +1,1 @@
+Deuxième terminal : python test.py

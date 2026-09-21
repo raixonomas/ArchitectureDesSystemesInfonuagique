@@ -1,0 +1,1 @@
+http://localhost:8082/promo?price=100&discount=20
