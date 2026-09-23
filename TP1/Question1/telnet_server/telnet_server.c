@@ -127,10 +127,34 @@ void *calculate_imc(void *arg){
     printf("client answer on height: %.2f \r\n", height_i);
 
     float client_imc = (float)weight_i /(height_i*height_i);
+    
+	char cat_imc_msg[32];
+    if(client_imc < 16.0){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You are severely underweight !\n\r");
+    }
+    else if(16.0 <= client_imc <= 16.9){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You are moderately underweight !\n\r");
+    }
+    else if(17.0 <= client_imc <= 18.4){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You are slightly underweight !\n\r");
+    }
+    else if(18.5 <= client_imc < 24.9){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You have a normal weight !\n\r");
+    }
+    else if(25.0 <= client_imc <= 29.9){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You are overweight !\n\r");
+    }
+    else if(client_imc >= 30.0){
+        snprintf(cat_imc_msg, sizeof(cat_imc_msg), "You are obese !\n\r");
+    }
     printf("client IMC: %.2f \r\n", client_imc);
     char imc_msg[32];
     snprintf(imc_msg, sizeof(imc_msg), "Your IMC is %.2f\n\r",client_imc);
     send_all(conn_sock, imc_msg);
+    send_all(conn_sock, cat_imc_msg);
+   
+    char end[8] = "\n\r";
+    send_all(conn_sock, end);
 
     // shutdown and close client socket
     shutdown(conn_sock, SHUT_RDWR);
