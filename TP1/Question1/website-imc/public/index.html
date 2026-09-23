@@ -55,6 +55,13 @@
         </main>
 
         <script>
+            function interpretation(imc) {
+              if (imc < 18.5) return "Insuffisance pondérale";
+              if (imc < 25) return "Corpulence normale";
+              if (imc < 30) return "Surpoids";
+              return "Obésité";
+            }
+        
             document.getElementById("form-imc").addEventListener("submit", function (event) {
                 event.preventDefault();
 
@@ -76,7 +83,7 @@
                 const imc = weight / (height_m * height_m);
                 const imc_round = Math.round(imc * 100)/100;
 
-                resEl.innerHTML = "<strong>IMC = "+ imc_round + "</strong>";
+                resEl.innerHTML = "<strong>IMC = "+ imc_round + "</strong><br>" + interpretation(imc_round);
                 resEl.style.display = "block";
             });
         </script>
